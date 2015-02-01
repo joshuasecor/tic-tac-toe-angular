@@ -40,9 +40,68 @@ ticTacApp.controller('ticTacCtrl', function($scope, $firebase){
       };
       $scope.counter[0].turnCounter++;
       $scope.counter.$save($scope.counter[0]);
-    };  
+    };
+      winLogic();  
     }
   
+  // Win logic //
+  function winLogic() {
+    if($scope.board[0].marker == "X" && $scope.board[1].marker == "X" && $scope.board[2].marker == "X")
+    {xWins()}
+    else if($scope.board[3].marker == "X" && $scope.board[4].marker == "X" && $scope.board[5].marker == "X")
+    {xWins()}
+    else if($scope.board[6].marker == "X" && $scope.board[7].marker == "X" && $scope.board[8].marker == "X")
+    {xWins()}
+      else if($scope.board[0].marker == "X" && $scope.board[3].marker == "X" && $scope.board[6].marker == "X")
+    {xWins()}
+    else if($scope.board[1].marker == "X" && $scope.board[4].marker == "X" && $scope.board[7].marker == "X")
+    {xWins()}
+      else if($scope.board[2].marker == "X" && $scope.board[5].marker == "X" && $scope.board[8].marker == "X")
+    {xWins()}
+      else if($scope.board[0].marker == "X" && $scope.board[4].marker == "X" && $scope.board[8].marker == "X")
+    {xWins()}
+      else if($scope.board[2].marker == "X" && $scope.board[4].marker == "X" && $scope.board[6].marker == "X")
+    {xWins()}
 
+
+    else if($scope.board[0].marker == "O" && $scope.board[1].marker == "O" && $scope.board[2].marker == "O")
+    {oWins()}
+    else if($scope.board[3].marker == "O" && $scope.board[4].marker == "O" && $scope.board[5].marker == "O")
+    {oWins()}
+    else if($scope.board[6].marker == "O" && $scope.board[7].marker == "O" && $scope.board[8].marker == "O")
+    {oWins()}
+      else if($scope.board[0].marker == "O" && $scope.board[3].marker == "O" && $scope.board[6].marker == "O")
+    {oWins()}
+    else if($scope.board[1].marker == "O" && $scope.board[4].marker == "O" && $scope.board[7].marker == "O")
+    {oWins()}
+      else if($scope.board[2].marker == "O" && $scope.board[5].marker == "O" && $scope.board[8].marker == "O")
+    {oWins()}
+      else if($scope.board[0].marker == "O" && $scope.board[4].marker == "O" && $scope.board[8].marker == "O")
+    {oWins()}
+      else if($scope.board[2].marker == "O" && $scope.board[4].marker == "O" && $scope.board[6].marker == "O")
+    {oWins()} 
+  }
 
 });
+
+// *** vanilla Javascript *** //
+
+// Functions to end game, change <h2> text, reveal "Play Again" button //
+function tieGame() {
+  document.getElementById("subheader").innerHTML = "It's a tie!";
+  enableButton();
+}
+
+function xWins() {
+  document.getElementById("subheader").innerHTML = "Player 1 wins!";
+  point1();
+  enableButton();
+  noClicks();
+}
+
+function oWins() {
+  document.getElementById("subheader").innerHTML = "Player 2 wins!";
+  point2();
+  enableButton();
+  noClicks();
+}
