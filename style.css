@@ -1,5 +1,10 @@
-body {
-	background-color: darkblue;
+html {
+	background: linear-gradient(to bottom right, black , darkblue);
+	height: 100%;
+}
+.center {
+	text-align: center;
+	margin: 0 auto;
 }
 #board {
 	height: 450px;
@@ -16,8 +21,55 @@ body {
 	font-family: "Palatino Linotype";
     color: #E3E3E3;
 }
+#header1 {
+	font-size: 22px;
+	font-family: "Verdana";
+    font-weight: bold;
+    color: #BA245F;
+    text-transform: uppercase;
+}
+#header2 {
+    font-size: 22px;
+    font-family: "Verdana";
+    color: #F19759;
+    text-transform: uppercase;
+}
 #subheader {
     font-size: 26px;
     font-family: "Tahoma";
     color: #E3E3E3;
 }
+#gameArea {
+	width: 900px;
+	margin: 0 auto;
+}
+#scoreBoard {
+	border: double 3px #E3E3E3;
+		width: 250px;
+		height: 450px;
+		margin-right: 50px;
+		margin-left: 50px;
+		font-family: "Tahoma";
+		float: left;
+}
+#scoreBoardHeader {
+	font-size: 26px;
+	font-family: "Tahoma";
+    color: #E3E3E3;
+}
+.playerNames {
+	font-size: 18px;
+	font-family: "Tahoma";
+    color: #E3E3E3;
+}
+.scores {
+	font-size: 80px;
+	font-family: "Tahoma";
+    color: #E3E3E3;
+}
+.button {
+	width: 150px;
+	height: 45px;
+	background: rgb(28, 184, 65);
+	border-radius: 15px;
+	font-size: 16px;

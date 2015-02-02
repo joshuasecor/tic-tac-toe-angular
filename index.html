@@ -14,17 +14,54 @@
     <script src="app.js"></script>
 </head>
 
-<body ng-controller="ticTacCtrl">
-	<div id="subheader">
+<body ng-controller="ticTacCtrl" onload="disableButton()">
+	<div id="header" class="center">
+		<div id="header1">
+			Let's play
+		</div>
+		<div id="header2">
+			Tic Tac Toe
+		</div>
 	</div>
+
+	<div id="subheader" class="center">
+	</div><br><br>
+
+	<!-- Scoreboard -->
+<div id="gameArea" class="center">
+	<div id="scoreBoard">
+		<br>
+		<div id="scoreBoardHeader">
+			Scoreboard
+		</div>
+		<br>
+		<div class="playerNames">
+			Player 1
+		</div>
+		<div id="player1" class="scores">
+			0
+		</div>
+		<br>
+		<div class="playerNames">
+			Player 2
+		</div>
+		<div id="player2" class="scores">
+			0
+		</div>
+		<br>
+		<button id="replay" class="button" ng-click="playAgain()">
+			Play Again
+		</button>
+	</div>
+
 <!-- TTT board build out -->
-    <div id="board">
+    <div id="board" class="center">
         <div class="squares"
 	        ng-repeat="square in board track by $index"
 	        ng-click="onClick($index)"
 	        ng-bind="board[$index].marker">
         </div>
     </div>    
-    
+
 </body>
 </html>

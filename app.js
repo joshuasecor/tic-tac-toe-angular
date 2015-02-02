@@ -9,24 +9,22 @@ ticTacApp.controller('ticTacCtrl', function($scope, $firebase){
         if ($scope.counter.length === 0) {
             $scope.counter.$add({turnCounter: 0});
         } else {
-            $scope.counter[0].turnCounter = 0;
             $scope.counter.$save($scope.counter[0]);
         }
+        document.getElementById("subheader").innerHTML = "Player 1's turn...";
     });
 
-  var turnCounter = 1;
-
-    $scope.board.$loaded(function(){
-        if ($scope.board.length === 0) {
-            for (var i = 0; i < 9; i++) {
-                $scope.board.$add({marker: ''});
-            }
-		} else {
-   			for (var i=0; i<9; i++)
-   			$scope.board[i] = '';
-   			$scope.board.$save(i);
-		}
-   	});
+  $scope.board.$loaded(function(){
+      if ($scope.board.length === 0) {
+          for (var i = 0; i < 9; i++) {
+              $scope.board.$add({marker: ''});
+          }
+	} else {
+ 			for (var i=0; i<9; i++)
+ 			$scope.board[i] = '';
+ 			$scope.board.$save(i);
+	}
+ 	});
 
   $scope.onClick = function(idx) {
     if ($scope.board[idx].marker == 0) {
@@ -41,9 +39,31 @@ ticTacApp.controller('ticTacCtrl', function($scope, $firebase){
       $scope.counter[0].turnCounter++;
       $scope.counter.$save($scope.counter[0]);
     };
-      winLogic();  
+    turnCounter++;
+    if (turnCounter %2 == 0) {
+      document.getElementById("subheader").innerHTML = "Player 2's turn...";
     }
-  
+    else {
+      document.getElementById("subheader").innerHTML = "Player 1's turn...";
+    };
+    if (turnCounter > 8) {
+      tieGame();
+    }
+    winLogic();  
+  }
+
+  // Restarts turn counter, clears board,  //
+  $scope.playAgain = function () {
+    for (var i = 0; i < 9; i++) {
+      $scope.board.$set({marker: 0});}
+    $scope.counter.$set({turnCounter: 0})
+    $scope.counter.$save($scope.counter[0]);
+    disableButton();
+    yesClicks();
+    document.getElementById("subheader").innerHTML = "Player 1's turn...";
+  }
+
+
   // Win logic //
   function winLogic() {
     if($scope.board[0].marker == "X" && $scope.board[1].marker == "X" && $scope.board[2].marker == "X")
@@ -79,12 +99,14 @@ ticTacApp.controller('ticTacCtrl', function($scope, $firebase){
       else if($scope.board[0].marker == "O" && $scope.board[4].marker == "O" && $scope.board[8].marker == "O")
     {oWins()}
       else if($scope.board[2].marker == "O" && $scope.board[4].marker == "O" && $scope.board[6].marker == "O")
-    {oWins()} 
-  }
+    {oWins()}
+  };
 
 });
 
 // *** vanilla Javascript *** //
+
+var turnCounter = 0;
 
 // Functions to end game, change <h2> text, reveal "Play Again" button //
 function tieGame() {
@@ -104,4 +126,47 @@ function oWins() {
   point2();
   enableButton();
   noClicks();
+}
+
+// Player scores //
+
+var plyr1 = 0;
+var plyr2 = 0;
+
+function point1() {
+  plyr1++;
+  document.getElementById("player1").innerHTML = plyr1;
+}
+
+function point2() {
+  plyr2++;
+  document.getElementById("player2").innerHTML = plyr2;
+}
+
+// Enable the "Play Again" button //
+function enableButton() {
+  document.getElementById("replay").disabled = false;
+}
+
+// Disable to "Play Again button" - this function is run on page load (see opening <body> tag) //
+function disableButton() {
+  document.getElementById("replay").disabled = true;
+}
+
+var squares = document.getElementsByClassName("squares");
+
+// Disable board //
+
+function noClicks() {
+  for (var i = 0; i < squares.length; i++) {
+    squares[i].style.pointerEvents = 'none';
+  }
+}
+
+// Enable board //
+
+function yesClicks() {
+  for (var i = 0; i < squares.length; i++) {
+    squares[i].style.pointerEvents = 'auto';
+  }
 }
