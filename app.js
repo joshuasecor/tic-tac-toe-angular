@@ -5,6 +5,10 @@ ticTacApp.controller('ticTacCtrl', function($scope, $firebase){
   $scope.board = $firebase(new Firebase("https://tic-tac-two.firebaseio.com/board")).$asArray();
   $scope.counter = $firebase(new Firebase("https://tic-tac-two.firebaseio.com/counter")).$asArray();
 
+  $scope.counter.$watch(function() {
+    winLogic()
+  });
+
   $scope.counter.$loaded(function () {
         if ($scope.counter.length === 0) {
             $scope.counter.$add({turnCounter: 0});
@@ -19,12 +23,12 @@ ticTacApp.controller('ticTacCtrl', function($scope, $firebase){
       for (var i = 0; i < 9; i++) {
         $scope.board.$add({marker: ''});
       }
-	} else {
- 			for (var i=0; i<9; i++)
- 			$scope.board[i] = '';
- 			$scope.board.$save(i);
-	}
- 	});
+  } else {
+      for (var i=0; i<9; i++)
+      $scope.board[i] = '';
+      $scope.board.$save(i);
+  }
+  });
 
   $scope.onClick = function(idx) {
     if ($scope.board[idx].marker == 0) {
@@ -48,8 +52,7 @@ ticTacApp.controller('ticTacCtrl', function($scope, $firebase){
     };
     if (turnCounter > 8) {
       tieGame();
-    }
-    winLogic();  
+    };
   }
 
   // Restarts turn counter, clears board,  //
