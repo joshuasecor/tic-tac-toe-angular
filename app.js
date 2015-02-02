@@ -15,10 +15,10 @@ ticTacApp.controller('ticTacCtrl', function($scope, $firebase){
     });
 
   $scope.board.$loaded(function(){
-      if ($scope.board.length === 0) {
-          for (var i = 0; i < 9; i++) {
-              $scope.board.$add({marker: ''});
-          }
+    if ($scope.board.length === 0) {
+      for (var i = 0; i < 9; i++) {
+        $scope.board.$add({marker: ''});
+      }
 	} else {
  			for (var i=0; i<9; i++)
  			$scope.board[i] = '';
@@ -54,12 +54,15 @@ ticTacApp.controller('ticTacCtrl', function($scope, $firebase){
 
   // Restarts turn counter, clears board,  //
   $scope.playAgain = function () {
-    for (var i = 0; i < 9; i++) {
-      $scope.board.$set({marker: 0});}
-    $scope.counter.$set({turnCounter: 0})
+    for (var i=0; i<9; i++) {
+      $scope.board[i].marker = '';
+      $scope.board.$save($scope.board[i]);
+    }
+    $scope.counter[0].turnCounter = 0;
     $scope.counter.$save($scope.counter[0]);
     disableButton();
     yesClicks();
+    turnCounter = 0;
     document.getElementById("subheader").innerHTML = "Player 1's turn...";
   }
 
@@ -112,6 +115,7 @@ var turnCounter = 0;
 function tieGame() {
   document.getElementById("subheader").innerHTML = "It's a tie!";
   enableButton();
+  noClicks();
 }
 
 function xWins() {

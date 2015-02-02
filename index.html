@@ -55,7 +55,7 @@
 	</div>
 
 <!-- TTT board build out -->
-    <div id="board" class="center">
+    <div id="board" class="center" ng-model="marker">
         <div class="squares"
 	        ng-repeat="square in board track by $index"
 	        ng-click="onClick($index)"
