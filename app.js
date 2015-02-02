@@ -5,30 +5,36 @@ ticTacApp.controller('ticTacCtrl', function($scope, $firebase){
   $scope.board = $firebase(new Firebase("https://tic-tac-two.firebaseio.com/board")).$asArray();
   $scope.counter = $firebase(new Firebase("https://tic-tac-two.firebaseio.com/counter")).$asArray();
 
+  // Check for win every time counter changes value - not working?? //
   $scope.counter.$watch(function() {
     winLogic()
   });
 
+  // Create counter and set to 0 if board loading for first time //
   $scope.counter.$loaded(function () {
         if ($scope.counter.length === 0) {
             $scope.counter.$add({turnCounter: 0});
+            // If already created, set to 0 when loading page //
         } else {
+            $scope.counter[0].turnCounter = 0;
             $scope.counter.$save($scope.counter[0]);
         }
+        // Disply player 1's turn at start //
         document.getElementById("subheader").innerHTML = "Player 1's turn...";
     });
 
+  // Dynamically create board on load, boxes have empty values ("marker") //
   $scope.board.$loaded(function(){
     if ($scope.board.length === 0) {
       for (var i = 0; i < 9; i++) {
         $scope.board.$add({marker: ''});
       }
-  } else {
-      for (var i=0; i<9; i++)
-      $scope.board[i] = '';
-      $scope.board.$save(i);
-  }
-  });
+      // If board already created, 
+  } for (var i=0; i<9; i++) {
+      $scope.board[i].marker = '';
+      $scope.board.$save($scope.board[i]);
+    }
+  1});
 
   $scope.onClick = function(idx) {
     if ($scope.board[idx].marker == 0) {
